@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#ff7847" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="Sugabee" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="description" content="Sugabee — cafe & bakery. Fresh pancakes, waffles, pizzas, coffee. Order online, delivered hot. 🐝" />
+
+<title>Sugabee · Cafe & Bakery</title>
+
+<link rel="manifest" href="/manifest.json" />
+<link rel="icon" type="image/png" href="/icons/icon-192.png" />
+<link rel="apple-touch-icon" href="/icons/icon-192.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<!-- Loader -->
+<div id="loader" class="loader">
+  <div class="loader-inner">
+    <svg viewBox="0 0 64 64" width="80" height="80" class="loader-bee">
+      <ellipse cx="32" cy="32" rx="26" ry="22" fill="#f5c269"/>
+      <path d="M 20 18 L 20 46 M 32 16 L 32 48 M 44 18 L 44 46" stroke="#3a1d0a" stroke-width="4"/>
+      <ellipse cx="20" cy="20" rx="13" ry="9" fill="#fef9f3" opacity="0.9" transform="rotate(-25 20 20)"/>
+      <ellipse cx="44" cy="20" rx="13" ry="9" fill="#fef9f3" opacity="0.9" transform="rotate(25 44 20)"/>
+      <circle cx="26" cy="32" r="2" fill="#3a1d0a"/>
+      <circle cx="38" cy="32" r="2" fill="#3a1d0a"/>
+      <path d="M 26 40 Q 32 44 38 40" stroke="#3a1d0a" stroke-width="2" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="loader-text">Sugabee</div>
+  </div>
+</div>
+
+<!-- App root -->
+<div id="app"></div>
+
+<!-- Install prompt (custom UI for "Add to Home Screen") -->
+<div id="install-banner" class="install-banner hidden">
+  <div class="install-content">
+    <div class="install-icon">📱</div>
+    <div class="install-text">
+      <div class="install-title">Install Sugabee</div>
+      <div class="install-sub">Add to home screen for the full app experience</div>
+    </div>
+    <button id="install-yes" class="install-btn">Install</button>
+    <button id="install-no" class="install-close">✕</button>
+  </div>
+</div>
+
+<!-- iOS install hint (since iOS Safari can't programmatically install) -->
+<div id="ios-install" class="ios-install hidden">
+  <div class="ios-install-card">
+    <button class="ios-close" onclick="document.getElementById('ios-install').classList.add('hidden')">✕</button>
+    <div class="ios-icon">🍯</div>
+    <h3>Install Sugabee on iPhone</h3>
+    <p>Get app-like experience with notifications:</p>
+    <ol>
+      <li>Tap <strong>Share</strong> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2v13M16 6l-4-4-4 4M5 13v6a2 2 0 002 2h10a2 2 0 002-2v-6"/></svg> at the bottom</li>
+      <li>Scroll down, tap <strong>"Add to Home Screen"</strong></li>
+      <li>Tap <strong>Add</strong> ✓</li>
+    </ol>
+  </div>
+</div>
+
+<!-- Notification toast -->
+<div id="toast-container" class="toast-container"></div>
+
+<script src="/app.js" type="module"></script>
+
+<script>
+  // Register service worker — makes it a real PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered:', reg.scope))
+        .catch(err => console.log('SW registration failed:', err));
+    });
+  }
+</script>
+</body>
+</html>
